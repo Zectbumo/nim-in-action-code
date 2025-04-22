@@ -79,10 +79,10 @@ proc findMessages*(database: Database, usernames: seq[string],
   result = @[]
   if usernames.len == 0: return
   var whereClause = " WHERE "
-  for i in 0 .. <usernames.len:
-    whereClause.add("username = ? ")
-    if i != <usernames.len:
+  for i in 0 ..< usernames.len:
+    if i != 0:
       whereClause.add("or ")
+    whereClause.add("username = ? ")
 
   let messages = database.db.getAllRows(
       sql("SELECT username, time, msg FROM Message" &
